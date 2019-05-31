@@ -1,0 +1,87 @@
+// day5-filesystem-version1.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include<stdio.h>
+#include<string.h>
+int no_files = 0;
+long metadatasize = 1000;
+struct metadata{
+	char filename[16];
+	long start;
+	unsigned int length;
+};
+int nextslot(char *diskname){
+	FILE *disk = fopen(diskname, "r");
+	struct metadata input;
+	input.start = metadatasize;
+	input.length = 0;
+	long lastslot;
+	int i;
+	for (i = 0; i < no_files; i++){
+		fread(&input, sizeof(struct metadata), 1, disk);
+	}
+	lastslot =input.length;
+	return lastslot + 100;
+}
+void writemetadataintofile(char *diskname,struct metadata *temp){
+	FILE *disk = fopen(diskname, "r+");
+	fseek(disk, 0+24*no_files, SEEK_SET);
+	struct metadata input;
+	fwrite(temp, sizeof(struct metadata), 1, disk);
+	fclose(disk);
+}
+void copyintodisk(char* diskname, char*filename){
+	struct metadata input;
+	char ch;
+	unsigned int len = 0;
+	FILE *file = fopen(filename, "r");
+	int start = nextslot(diskname);
+	FILE *disk = fopen(diskname, "r+");
+	fseek(disk, start, SEEK_SET);
+	while ((ch = fgetc(file)) != EOF){
+		len++;
+		fprintf(disk, "%c", ch);
+	}
+	input.length = ftell(disk);
+	strcpy(input.filename, filename);
+	input.start = start;
+	fclose(disk);
+	fclose(file);
+	writemetadataintofile(diskname,&input);
+	printf("\n%s ==copied successfully\n", filename);
+	no_files++;
+}
+void copyfromdisk(FILE *disk, char*filename){
+
+}
+void listallfiles(char *filename){
+	struct metadata input;
+	FILE *disk = fopen(filename, "r");
+	if (disk)
+	{
+		printf("the file %s cannot be opened", filename);
+		return ;
+	}
+	for (int i = 0; i < no_files; i++){
+		int x=fread(&input, sizeof(struct metadata), 1, disk);
+
+		printf("\nfilename = %s \t filestart = %u \t fileend = %u \n", input.filename, input.start, input.length);
+	}
+}
+int main(){ 
+	/*copyintodisk("disk.hdd","0.txt");
+	copyintodisk("disk.hdd", "1.txt");
+	copyintodisk("disk.hdd", "0.txt);*/
+	char *filename = "disk.hdd";
+	FILE *disk = fopen(filename, "r+");
+	if (disk)
+	{
+		printf("the file %s cannot be opened", filename);
+		return 0;
+	}
+	fscanf(disk,"%ld",);
+	listallfiles("disk.hdd");
+	getchar();
+	return 0;
+}
