@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{my_dict.id}}</h1>
+<h1>helloworld</h1>
+<table border="1">
+{% for row in my_dict %}
+    <tr>
+  <td>{{ row.name }}</td>
+          <td>{{ row.email }}</td>
+        <td>{{ row.mocktest1__total }}</td>
+        <td>{{row.college__name}}</td>
+    </tr>
+{% endfor %}
+</table>
+</body>
+</html>
