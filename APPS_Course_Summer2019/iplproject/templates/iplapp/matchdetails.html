@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <style>
+
+        .hide {
+            display: none;
+        }
+    </style>
+
+</head>
+<body >
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">myIplTV</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/home/"><strong>Home</strong></a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% ifnotequal user.is_authenticated 1 %}
+            <li><a href="/signup/"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% else %}
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span>{{user}}</a></li>
+            <li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            {% endifnotequal %}
+        </ul>
+    </div>
+</nav>
+
+
+{% for item in my_dict %}
+<div class="container">
+    <div class="jumbotron">
+        <h4>Teams : <strong>{{item.0}} vs {{item.1}}</strong></h4>
+        <h4>location:<strong>{{item.2}}</strong></h4>
+        <h4>toss won by:<strong>{{item.3}}</strong></h4>
+        <h4>toss decision :<strong>{{item.4}}</strong></h4>
+        <h4>Winner Winner chicken dinner:<strong>{{item.5}}</strong></h4>
+        <h4>MAN OF THE MATCH :<strong>{{item.6}}</strong></h4>
+        <br>
+        <h4>TOP THREE STATISTICS FOR :<strong>{{item.0}}</strong></h4>
+        <table border="1" class="table table-striped  table-hover">
+            <tr>
+                <td><strong>S.NO</strong></td>
+                <td><strong>BATSMAN</strong></td>
+                <td><strong>SCORE</strong></td>
+                <td><strong>WICKET TAKER</strong></td>
+                <td><strong>NO_OF_WICKETS</strong></td>
+            </tr>
+            {% for item in stats %}
+            <tr>
+                {% for x in item %}
+                <td>{{ x }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <h4>TOP THREE STATISTICS FOR :<strong>{{item.1}}</strong></h4>
+        <table border="1" class="table table-striped  table-hover">
+            <tr>
+                <td><strong>S.NO</strong></td>
+                <td><strong>BATSMAN</strong></td>
+                <td><strong>SCORE</strong></td>
+                <td><strong>WICKET TAKER</strong></td>
+                <td><strong>NO_OF_WICKETS</strong></td>
+            </tr>
+            {% for item in stats1 %}
+            <tr>
+                {% for x in item %}
+                <td>{{ x }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endfor %}
+
+
+<center>
+<div class="container "  id="temp">
+    <a class="btn btn-primary" href="#temp" onclick="show_page(1)">Inning 1</a>
+    <a class="btn btn-primary" href="#temp" onclick="show_page(2)">Inning 2</a>
+</div>
+</center>
+{% for i in deliveries %}
+<div class="container overflow-scroll hide inning" id="page_{{ forloop.counter }}">
+    <table  border="1" class="table table-striped  table-hover" >
+        <thead>
+        <tr>
+            <th style="background-color:lightblue;border:1px solid black;">Innings</th>
+            <th style="background-color:lightblue;border:1px solid black;">Over</th>
+            <th style="background-color:lightblue;border:1px solid black;">Balls</th>
+            <th style="background-color:lightblue;border:1px solid black;">Batsman</th>
+            <th style="background-color:lightblue;border:1px solid black;">Bowler</th>
+            <th style="background-color:lightblue;border:1px solid black;">Runs Scored</th>
+            <th style="background-color:lightblue;border:1px solid black;">Extra Runs</th>
+            <th style="background-color:lightblue;border:1px solid black;">Player Dismissed</th>
+            <th style="background-color:lightblue;border:1px solid black;">Dismissal Kind</th>
+            <th style="background-color:lightblue;border:1px solid black;">Fielder</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in i %}
+        <tr class="">
+            <td><b>{{item.0}}</b></td>
+            <td>{{item.1}}</td>
+            <td>{{item.2}}</td>
+            <td>{{item.3}}</td>
+            <td>{{item.4}}</td>
+            <td><b>{{item.5}}</b></td>
+            <td>{{item.6}}</td>
+            <td>{{item.7}}</td>
+            <td>{{item.8}}</td>
+            <td>{{item.9}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endfor %}
+</body>
+
+<script>
+    function show_page(page_num) {
+        let innings = document.getElementsByClassName("inning");
+        for (let i = 0; i < innings.length; i++) {
+            innings[i].classList.add("hide");
+        }
+        document.getElementById(`page_${page_num}`).classList.remove("hide")
+    }
+
+
+</script>
+
+
+</html>

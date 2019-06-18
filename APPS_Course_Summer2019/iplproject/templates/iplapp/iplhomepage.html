@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">myIplTV</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/home/"><strong>Home</strong></a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% ifnotequal user.is_authenticated 1 %}
+            <li><a href="/signup/"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            {% else %}
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span>{{user}}</a></li>
+            <li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            {% endifnotequal %}
+        </ul>
+    </div>
+</nav>
+
+<!-- Slide Show -->
+<section>
+  <img class="mySlides" src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=747&q=80"
+  style="width:100%">
+  <img class="mySlides" src="https://images.unsplash.com/photo-1552435053-01c010307582?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=825&q=80"
+  style="width:100%">
+  <img class="mySlides" src="https://wallpapercave.com/wp/wp2458612.jpg"
+  style="width:100%">
+</section>
+
+<!-- Band Description -->
+<section class="w3-container w3-center w3-content" style="max-width:600px">
+  <h2 class="w3-wide">CRICKET</h2>
+  <p class="w3-opacity"><i>We love cricket</i></p>
+  <p class="w3-justify">Cricket is my favorite game. It is a very thrilling game. It is played between two teams consisting of 11 players in each team
+  Indian cricket team is worshipped like a deity in India. Famous cricketers such as Sachin Tendulkar, M.S.Dhoni, Virat Kohli, Sunil Gavaskar, Kapil Dev, etc. are revered as gods. When Indian cricket team plays a match against any other team, the nation comes to a standstill. People leave their work and get glued to TV. If the match happens to be against Pakistan, the entire nation forgets everything except watching the match on TV. The day Indian cricket team wins against the arch-rivals, there is Diwali celebrations throughout the nation. People let off crackers at night to celebrate the victory
+</p>
+</section>
+
+<div class="container">
+  <div class="jumbotron">
+<center>
+    <h4>contains the details of all matches played in every season ..minimized description of the match..</h4>
+      <h4><a class="btn btn-info" href="/home/">Match details for seasons </a></h4>
+</center>
+  </div>
+</div>
+
+<div class="container">
+  <div class="jumbotron">
+      <center>
+          <h4>contains the points scored by the team in season wize . you can view the status of the team ,matches played ,won,lost..</h4>
+      <h4><a class="btn btn-info" href="/points/"><strong>points table for seasons</strong></a></h4>
+      </center>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="jumbotron">
+      <center>
+<h4>it is basically the team overview which contains every season status of the team..</h4>
+      <h4><a class="btn btn-info" href="{% url 'teamhomepage' 1 %}">Teamstime line</a></h4>
+      </center>
+  </div>
+</div>
+<script>
+// Automatic Slideshow - change image every 3 seconds
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}
+  x[myIndex-1].style.display = "block";
+  setTimeout(carousel, 3000);
+}
+</script>
+
+</body>
+</html>
+
